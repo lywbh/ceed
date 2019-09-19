@@ -30,8 +30,22 @@ cc.Class({
     },
 
     onPress() {
-        // TODO 判定时间差确定acc
+        var acc = Math.abs(this.node.offset - cc.audioEngine.getCurrentTime(this.node.musicId));
+        // TODO 判定阈值待实测
         // TODO 播放判定动画
+        if (acc < 0.2) {
+            // 满分
+        } else if (acc < 0.5) {
+            // 警告
+        } else {
+            // miss
+        }
         this.node.destroy();
+    },
+
+    update(dt) {
+        if (this.node.position.y < -900) {
+            this.node.destroy();
+        }
     }
 });

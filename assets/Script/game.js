@@ -38,23 +38,19 @@ cc.Class({
                 // TODO note用完了，稍等一会切到成绩场景
             } else {
                 var g = -cc.director.getPhysicsManager().gravity.y;
-                console.log("g:", g);
                 var h = note.fixPos.y - note.genPos.y;
-                console.log("h:", h);
                 var v0 = Math.sqrt(2 * g * h);
-                console.log("v0:", v0);
                 var t = v0 / g;
-                console.log("t:", t);
                 var actualGenOffset = note.offset - t;
-                var vx = (note.fixPos.x - note.genPos.x) / t;
                 if (cc.audioEngine.getCurrentTime(this.musicId) >= actualGenOffset) {
                     this.n++;
                     if (note.type === 1) {
                         // 出note
                         var noteNode = cc.instantiate(this.notePrefab);
-                        console.log(noteNode);
+                        noteNode.musicId = this.musicId;
+                        noteNode.offset = note.offset;
                         noteNode.position = cc.v2(note.genPos.x, note.genPos.y);
-                        noteNode.getComponent(cc.RigidBody).linearVelocity = cc.v2(vx, v0);
+                        noteNode.getComponent(cc.RigidBody).linearVelocity = cc.v2((note.fixPos.x - note.genPos.x) / t, v0);
                         this.node.addChild(noteNode);
                     } else if (note.type === 2) {
                         // TODO 出面条或者什么类型
