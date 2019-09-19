@@ -1,0 +1,25 @@
+{
+	"name": "Chrono Diver -PENDULUMs- (USAO remix)",
+	"creator": "kamimi",
+	"music": "mp3.mp3",
+	"game": {
+		"notes": [
+			{
+				"type": 1,
+				"offset": 5.0,
+				"genPos": {"x": -800, "y": -450},
+				"fixPos": {"x": 0, "y": 0}
+			},{
+				"type": 1,
+				"offset": 7.0,
+				"genPos": {"x": 200, "y": -450},
+				"fixPos": {"x": 200, "y": 300}
+			},{
+				"type": 1,
+				"offset": 9.0,
+				"genPos": {"x": -400, "y": -450},
+				"fixPos": {"x": -20, "y": 200}
+			}
+		]
+	}
+}
