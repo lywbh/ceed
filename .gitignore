@@ -3,3 +3,4 @@ library/
 local/
 temp/
 build/
+**/*.meta
