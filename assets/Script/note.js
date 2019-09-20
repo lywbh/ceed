@@ -12,6 +12,15 @@ cc.Class({
     extends: cc.Component,
 
     onLoad() {
+        this.node.scale = 0;
+        var lifeTime = this.node.offset - cc.audioEngine.getCurrentTime(this.node.musicId);
+        var scaleUp = cc.scaleTo(lifeTime, 1);
+        var rigidBody = this.getComponent(cc.RigidBody);
+        var vxStop = cc.callFunc(function () {
+            rigidBody.linearVelocity = cc.v2(0, rigidBody.linearVelocity.y);
+        }, this, rigidBody);
+        var fadeOut = cc.fadeOut(0.2);
+        this.node.runAction(cc.sequence(scaleUp, vxStop, fadeOut));
         this.openInput();
     },
 
@@ -20,31 +29,37 @@ cc.Class({
     },
 
     openInput() {
-        this.node.on(cc.Node.EventType.MOUSE_DOWN, this.onPress, this);
-        this.node.on(cc.Node.EventType.TOUCH_START, this.onPress, this);
+        this.node.once(cc.Node.EventType.TOUCH_START, this.onPress, this);
     },
 
     cancelInput() {
-        this.node.off(cc.Node.EventType.MOUSE_DOWN, this.onPress, this);
         this.node.off(cc.Node.EventType.TOUCH_START, this.onPress, this);
     },
 
-    onPress() {
-        var acc = Math.abs(this.node.offset - cc.audioEngine.getCurrentTime(this.node.musicId));
-        // TODO 判定阈值待实测
-        // TODO 播放判定动画
-        if (acc < 0.2) {
-            // 满分
-        } else if (acc < 0.5) {
-            // 警告
-        } else {
-            // miss
+    onPress(e) {
+        // 下落期才能点击，防止误触
+        if (this.getComponent(cc.RigidBody).linearVelocity.y < 0) {
+            // 播放判定动画
+            this.getComponent(cc.RigidBody).linearVelocity = cc.v2(0, 0);
+            var destroy = cc.callFunc(function () {
+                this.node.destroy();
+            }, this);
+            this.node.runAction(cc.scaleTo(0.1, 2));
+            this.node.runAction(cc.sequence(cc.fadeOut(0.1), destroy));
+            // TODO 判定阈值待实测
+            /*var acc = Math.abs(this.node.offset - cc.audioEngine.getCurrentTime(this.node.musicId));
+            if (acc < 0.1) {
+                // 满分
+            } else if (acc < 0.3) {
+                // 警告
+            } else {
+                // miss
+            }*/
         }
-        this.node.destroy();
     },
 
     update(dt) {
-        if (this.node.position.y < -900) {
+        if (this.node.opacity <= 0) {
             this.node.destroy();
         }
     }

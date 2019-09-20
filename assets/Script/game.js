@@ -12,6 +12,10 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        linePrefab: {
+            default: null,
+            type: cc.Prefab
+        },
         notePrefab: {
             default: null,
             type: cc.Prefab
@@ -24,39 +28,84 @@ cc.Class({
         var self = this;
         cc.loader.loadRes("beatmaps/test/beatmap", cc.JsonAsset, function (err, map) {
             cc.loader.loadRes("beatmaps/test/" + map.json.music, cc.AudioClip, function (err, clip) {
+                self.lines = map.json.game.lines;
                 self.notes = map.json.game.notes;
-                self.n = 0;
+                self.lineCount = 0;
+                self.noteCount = 0;
                 self.musicId = cc.audioEngine.play(clip, false, 1);
             });
         });
     },
 
     update(dt) {
-        if (typeof(this.musicId) !== "undefined") {
-            var note = this.notes[this.n];
-            if (!note) {
-                // TODO note用完了，稍等一会切到成绩场景
-            } else {
-                var g = -cc.director.getPhysicsManager().gravity.y;
-                var h = note.fixPos.y - note.genPos.y;
-                var v0 = Math.sqrt(2 * g * h);
-                var t = v0 / g;
-                var actualGenOffset = note.offset - t;
-                if (cc.audioEngine.getCurrentTime(this.musicId) >= actualGenOffset) {
-                    this.n++;
+        if (this.musicId >= 0) {
+            this.genLine();
+            this.genNote();
+        }
+    },
+
+    genLine() {
+        var lines = this.lines[this.lineCount];
+        if (lines) {
+            for (var i in lines) {
+                var line = lines[i];
+                if (cc.audioEngine.getCurrentTime(this.musicId) >= line.offset - 2) {
+                    this.lineCount++;
+                    var lineNode = cc.instantiate(this.linePrefab);
+                    lineNode.position = line.position;
+                    lineNode.duration = line.duration;
+                    this.node.getChildByName("lines").addChild(lineNode);
+                }
+            }
+        }
+    },
+
+    genNote() {
+        var notes = this.notes[this.noteCount];
+        if (!notes) {
+            this.handleGameOver();
+        } else {
+            for (var i in notes) {
+                var note = notes[i];
+                var [genPos, genVelocity, t] = this.getNoteInit(note.position);
+                if (cc.audioEngine.getCurrentTime(this.musicId) >= note.offset - t) {
+                    this.noteCount++;
                     if (note.type === 1) {
                         // 出note
                         var noteNode = cc.instantiate(this.notePrefab);
                         noteNode.musicId = this.musicId;
                         noteNode.offset = note.offset;
-                        noteNode.position = cc.v2(note.genPos.x, note.genPos.y);
-                        noteNode.getComponent(cc.RigidBody).linearVelocity = cc.v2((note.fixPos.x - note.genPos.x) / t, v0);
-                        this.node.addChild(noteNode);
+                        noteNode.position = genPos;
+                        noteNode.getComponent(cc.RigidBody).linearVelocity = genVelocity;
+                        this.node.getChildByName("notes").addChild(noteNode);
                     } else if (note.type === 2) {
                         // TODO 出面条或者什么类型
                     }
                 }
             }
         }
+    },
+
+    getNoteInit(endPos) {
+        var g = -cc.director.getPhysicsManager().gravity.y;
+        var highPos = cc.v2(endPos.x * 3 / 4, endPos.y + this.node.height / 4);
+
+        var hEnd = highPos.y - endPos.y;
+        var tEnd = Math.sqrt(2 * hEnd / g);
+
+        var hGen = highPos.y + this.node.height / 2;
+        var tGen = Math.sqrt(2 * hGen / g);
+
+        var vx = (endPos.x - highPos.x) / tEnd;
+        var vy = Math.sqrt(2 * g * hGen);
+
+        var t = tEnd + tGen;
+        var xGen = endPos.x - vx * t;
+        return [cc.v2(xGen, -this.node.height / 2), cc.v2(vx, vy), t];
+    },
+
+    handleGameOver() {
+        this.musicId = -999;
+        // TODO 游戏结束，切得分场景
     }
 });
