@@ -26,8 +26,8 @@ cc.Class({
         cc.director.getPhysicsManager().enabled = true;
         cc.director.getPhysicsManager().gravity = cc.v2(0, -3200);
         var self = this;
-        cc.loader.loadRes("beatmaps/test/beatmap", cc.JsonAsset, function (err, map) {
-            cc.loader.loadRes("beatmaps/test/" + map.json.music, cc.AudioClip, function (err, clip) {
+        cc.loader.loadRes("beatmaps/1/beatmap", cc.JsonAsset, function (err, map) {
+            cc.loader.loadRes("beatmaps/1/" + map.json.music, cc.AudioClip, function (err, clip) {
                 self.lines = map.json.game.lines;
                 self.notes = map.json.game.notes;
                 self.lineCount = 0;

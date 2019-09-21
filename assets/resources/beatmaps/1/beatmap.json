@@ -1,0 +1,196 @@
+{
+	"name": "Chrono Diver -PENDULUMs- (USAO remix)",
+	"creator": "kamimi",
+	"music": "mp3.mp3",
+	"background": "bg.jpg",
+	"game": {
+		"notes": [
+			[{
+				"type": 1,
+				"offset": 2.243,
+				"position": {"x": 0, "y": 0}
+			},{
+				"type": 1,
+				"offset": 2.243,
+				"position": {"x": 400, "y": 0}
+			}],[{
+				"type": 1,
+				"offset": 2.406,
+				"position": {"x": -100, "y": 0}
+			}],[{
+				"type": 1,
+				"offset": 2.569,
+				"position": {"x": 200, "y": 0}
+			}],[{
+				"type": 1,
+				"offset": 2.732,
+				"position": {"x": -100, "y": 0}
+			}],[{
+				"type": 1,
+				"offset": 2.895,
+				"position": {"x": 400, "y": 0}
+			}],[{
+				"type": 1,
+				"offset": 2.976,
+				"position": {"x": -200, "y": 0}
+			}],[{
+				"type": 1,
+				"offset": 3.058,
+				"position": {"x": 400, "y": 0}
+			}],[{
+				"type": 1,
+				"offset": 3.221,
+				"position": {"x": -400, "y": 0}
+			}],[{
+				"type": 1,
+				"offset": 3.384,
+				"position": {"x": 600, "y": 0}
+			}], [{
+				"type": 1,
+				"offset": 3.547,
+				"position": {"x": -400, "y": 0}
+			},{
+				"type": 1,
+				"offset": 3.547,
+				"position": {"x": 0, "y": 0}
+			}],[{
+				"type": 1,
+				"offset": 3.710,
+				"position": {"x": 100, "y": 0}
+			}],[{
+				"type": 1,
+				"offset": 3.873,
+				"position": {"x": -200, "y": 0}
+			}],[{
+				"type": 1,
+				"offset": 4.036,
+				"position": {"x": 100, "y": 0}
+			}],[{
+				"type": 1,
+				"offset": 4.199,
+				"position": {"x": -400, "y": 0}
+			}],[{
+				"type": 1,
+				"offset": 4.281,
+				"position": {"x": 200, "y": 0}
+			}],[{
+				"type": 1,
+				"offset": 4.362,
+				"position": {"x": -400, "y": 0}
+			}],[{
+				"type": 1,
+				"offset": 4.525,
+				"position": {"x": 400, "y": 0}
+			}],[{
+				"type": 1,
+				"offset": 4.688,
+				"position": {"x": -600, "y": 0}
+			}],[{
+				"type": 1,
+				"offset": 4.851,
+				"position": {"x": 0, "y": -300}
+			},{
+				"type": 1,
+				"offset": 4.851,
+				"position": {"x": 400, "y": -300}
+			}],[{
+				"type": 1,
+				"offset": 5.014,
+				"position": {"x": -100, "y": -300}
+			}],[{
+				"type": 1,
+				"offset": 5.177,
+				"position": {"x": 200, "y": -300}
+			}],[{
+				"type": 1,
+				"offset": 5.340,
+				"position": {"x": -100, "y": -300}
+			}],[{
+				"type": 1,
+				"offset": 5.503,
+				"position": {"x": 400, "y": -300}
+			}],[{
+				"type": 1,
+				"offset": 5.585,
+				"position": {"x": -200, "y": -300}
+			}],[{
+				"type": 1,
+				"offset": 5.666,
+				"position": {"x": 400, "y": -300}
+			}],[{
+				"type": 1,
+				"offset": 5.829,
+				"position": {"x": -400, "y": -300}
+			}],[{
+				"type": 1,
+				"offset": 5.992,
+				"position": {"x": 600, "y": -300}
+			}],[{
+				"type": 1,
+				"offset": 6.156,
+				"position": {"x": -400, "y": -300}
+			},{
+				"type": 1,
+				"offset": 6.156,
+				"position": {"x": 0, "y": -300}
+			}],[{
+				"type": 1,
+				"offset": 6.319,
+				"position": {"x": 100, "y": -300}
+			}],[{
+				"type": 1,
+				"offset": 6.482,
+				"position": {"x": -200, "y": -300}
+			}],[{
+				"type": 1,
+				"offset": 6.645,
+				"position": {"x": 100, "y": -300}
+			}],[{
+				"type": 1,
+				"offset": 6.808,
+				"position": {"x": -400, "y": -300}
+			}],[{
+				"type": 1,
+				"offset": 6.889,
+				"position": {"x": 200, "y": -300}
+			}],[{
+				"type": 1,
+				"offset": 6.971,
+				"position": {"x": -400, "y": -300}
+			}],[{
+				"type": 1,
+				"offset": 7.134,
+				"position": {"x": 400, "y": -300}
+			}],[{
+				"type": 1,
+				"offset": 7.297,
+				"position": {"x": -600, "y": -300}
+			}],[{
+				"type": 2,
+				"offset": 7.460,
+				"duration": 0.326,
+				"position": {"x": -300, "y": 100}
+			},{
+				"type": 2,
+				"offset": 7.460,
+				"duration": 0.326,
+				"position": {"x": 300, "y": 100}
+			}]
+		],
+		"lines": [
+			[{
+				"offset": 2.243,
+				"duration": 2.445,
+				"position": {"x": 0, "y": 0}
+			}], [{
+				"offset": 4.851,
+				"duration": 2.445,
+				"position": {"x": 0, "y": -300}
+			}], [{
+				"offset": 7.460,
+				"duration": 2.445,
+				"position": {"x": 0, "y": 100}
+			}]
+		]
+	}
+}
