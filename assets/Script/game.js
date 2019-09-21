@@ -34,6 +34,7 @@ cc.Class({
                     self.notes = map.json.game.notes;
                     self.lineCount = 0;
                     self.noteCount = 0;
+                    cc.audioEngine.stopAll();
                     self.musicId = cc.audioEngine.play(clip, false, 1);
                 });
             });
@@ -53,7 +54,9 @@ cc.Class({
             for (var i in lines) {
                 var line = lines[i];
                 if (cc.audioEngine.getCurrentTime(this.musicId) >= line.offset - 2) {
-                    this.lineCount++;
+                    if (i === '0') {
+                        this.lineCount++;
+                    }
                     var lineNode = cc.instantiate(this.linePrefab);
                     lineNode.position = line.position;
                     lineNode.duration = line.duration;
@@ -72,13 +75,17 @@ cc.Class({
                 var note = notes[i];
                 var [genPos, genVelocity, t] = this.getNoteInit(note.position);
                 if (cc.audioEngine.getCurrentTime(this.musicId) >= note.offset - t) {
-                    this.noteCount++;
+                    if (i === '0') {
+                        this.noteCount++;
+                    }
                     if (note.type === 1) {
                         // 出note
                         var noteNode = cc.instantiate(this.notePrefab);
                         noteNode.musicId = this.musicId;
                         noteNode.offset = note.offset;
                         noteNode.position = genPos;
+                        // TODO 这个在手机上无效，导致后边的note点击区域覆盖前边的，完全无法玩，正在解决
+                        noteNode.zIndex = this.notes.length - this.noteCount;
                         noteNode.getComponent(cc.RigidBody).linearVelocity = genVelocity;
                         this.node.getChildByName("notes").addChild(noteNode);
                     } else if (note.type === 2) {

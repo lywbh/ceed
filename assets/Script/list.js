@@ -30,16 +30,21 @@ cc.Class({
         var id = this.idList[current];
         if (id) {
             cc.audioEngine.stopAll();
+            this.left.getComponent('left').cancelInput();
+            this.right.getComponent('right').cancelInput();
             Global.CURRENT_SONG_INDEX = current;
-            var bgNode = this.node.getChildByName("background");
+            var self = this;
             cc.loader.loadRes("beatmaps/" + id + "/beatmap", cc.JsonAsset, function (err, map) {
                 cc.loader.loadRes("beatmaps/" + id + "/" + map.json.background, cc.SpriteFrame, function (err, spriteFrame) {
+                    var bgNode = self.node.getChildByName("background");
                     bgNode.opacity = 0;
                     bgNode.runAction(cc.fadeIn(0.5).easing(cc.easeCubicActionOut()));
                     bgNode.getComponent(cc.Sprite).spriteFrame = spriteFrame;
                 });
                 cc.loader.loadRes("beatmaps/" + id + "/" + map.json.music, cc.AudioClip, function (err, clip) {
                     cc.audioEngine.play(clip, false, 1);
+                    self.left.getComponent('left').openInput();
+                    self.right.getComponent('right').openInput();
                 });
             });
         }

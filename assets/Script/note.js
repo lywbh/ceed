@@ -40,6 +40,7 @@ cc.Class({
         // 下落期才能点击，防止误触
         if (this.getComponent(cc.RigidBody).linearVelocity.y < 0) {
             // 播放判定动画
+            this.node.zIndex = -9999;
             this.getComponent(cc.RigidBody).linearVelocity = cc.v2(0, 0);
             var destroy = cc.callFunc(function () {
                 this.node.destroy();
