@@ -27,7 +27,8 @@ cc.Class({
         this.node.off(cc.Node.EventType.TOUCH_START, this.onPress, this);
     },
 
-    onPress () {
-        this.list.loadPreview(this.list.current - 1);
+    onPress (e) {
+        this.list.loadPreview(Global.CURRENT_SONG_INDEX - 1);
+        e.stopPropagation();
     }
 });

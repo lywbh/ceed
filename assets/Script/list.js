@@ -8,6 +8,10 @@
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
 
+window.Global = {
+    CURRENT_SONG_INDEX: 0
+};
+
 cc.Class({
     extends: cc.Component,
 
@@ -26,7 +30,7 @@ cc.Class({
         var id = this.idList[current];
         if (id) {
             cc.audioEngine.stopAll();
-            this.current = current;
+            Global.CURRENT_SONG_INDEX = current;
             var bgNode = this.node.getChildByName("background");
             cc.loader.loadRes("beatmaps/" + id + "/beatmap", cc.JsonAsset, function (err, map) {
                 cc.loader.loadRes("beatmaps/" + id + "/" + map.json.background, cc.SpriteFrame, function (err, spriteFrame) {
@@ -47,8 +51,26 @@ cc.Class({
         var self = this;
         cc.loader.loadRes("beatmaps/list", cc.JsonAsset, function (err, map) {
             self.idList = map.json;
-            self.current = 0;
-            self.loadPreview(0);
+            self.loadPreview(Global.CURRENT_SONG_INDEX);
         });
+        this.openInput();
+    },
+
+    onDestroy() {
+        this.cancelInput();
+    },
+
+    openInput() {
+        this.node.on(cc.Node.EventType.TOUCH_START, this.onPress, this);
+    },
+
+    cancelInput() {
+        this.node.off(cc.Node.EventType.TOUCH_START, this.onPress, this);
+    },
+
+    onPress (e) {
+        cc.audioEngine.stopAll();
+        cc.director.loadScene("game");
+        e.stopPropagation();
     }
 });

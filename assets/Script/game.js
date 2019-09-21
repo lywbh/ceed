@@ -26,13 +26,16 @@ cc.Class({
         cc.director.getPhysicsManager().enabled = true;
         cc.director.getPhysicsManager().gravity = cc.v2(0, -3200);
         var self = this;
-        cc.loader.loadRes("beatmaps/1/beatmap", cc.JsonAsset, function (err, map) {
-            cc.loader.loadRes("beatmaps/1/" + map.json.music, cc.AudioClip, function (err, clip) {
-                self.lines = map.json.game.lines;
-                self.notes = map.json.game.notes;
-                self.lineCount = 0;
-                self.noteCount = 0;
-                self.musicId = cc.audioEngine.play(clip, false, 1);
+        cc.loader.loadRes("beatmaps/list", cc.JsonAsset, function (err, listMap) {
+            var id = listMap.json[Global.CURRENT_SONG_INDEX];
+            cc.loader.loadRes("beatmaps/" + id + "/beatmap", cc.JsonAsset, function (err, map) {
+                cc.loader.loadRes("beatmaps/" + id + "/" + map.json.music, cc.AudioClip, function (err, clip) {
+                    self.lines = map.json.game.lines;
+                    self.notes = map.json.game.notes;
+                    self.lineCount = 0;
+                    self.noteCount = 0;
+                    self.musicId = cc.audioEngine.play(clip, false, 1);
+                });
             });
         });
     },
@@ -106,6 +109,10 @@ cc.Class({
 
     handleGameOver() {
         this.musicId = -999;
-        // TODO 游戏结束，切得分场景
+        // TODO 游戏结束，切得分场景，这里先切回菜单
+        this.getComponent(cc.Canvas).scheduleOnce(function() {
+            cc.audioEngine.stopAll();
+            cc.director.loadScene("list");
+        }, 3);
     }
 });
